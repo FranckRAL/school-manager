@@ -1,0 +1,10 @@
+import * as Prisma from './internal/prismaNamespaceBrowser';
+export { Prisma };
+export * as $Enums from './enums';
+export * from './enums';
+export type ScolaryYear = Prisma.ScolaryYearModel;
+export type Level = Prisma.LevelModel;
+export type Classe = Prisma.ClasseModel;
+export type Student = Prisma.StudentModel;
+export type Subject = Prisma.SubjectModel;
+export type Teach = Prisma.TeachModel;
