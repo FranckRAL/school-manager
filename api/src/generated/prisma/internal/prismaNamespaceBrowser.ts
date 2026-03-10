@@ -55,6 +55,7 @@ export const ModelName = {
   Level: 'Level',
   Classe: 'Classe',
   Student: 'Student',
+  Enrollment: 'Enrollment',
   Subject: 'Subject',
   Teach: 'Teach'
 } as const
@@ -98,14 +99,14 @@ export const ClasseScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  levelId: 'levelId',
-  scolaryYearId: 'scolaryYearId'
+  levelId: 'levelId'
 } as const
 
 export type ClasseScalarFieldEnum = (typeof ClasseScalarFieldEnum)[keyof typeof ClasseScalarFieldEnum]
 
 
 export const StudentScalarFieldEnum = {
+  id: 'id',
   matricule: 'matricule',
   first_name: 'first_name',
   last_name1: 'last_name1',
@@ -114,11 +115,22 @@ export const StudentScalarFieldEnum = {
   father_name: 'father_name',
   mother_name: 'mother_name',
   tutor_phone_number: 'tutor_phone_number',
-  address: 'address',
-  classeId: 'classeId'
+  address: 'address'
 } as const
 
 export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
+
+
+export const EnrollmentScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  classeId: 'classeId',
+  scolaryYearId: 'scolaryYearId',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type EnrollmentScalarFieldEnum = (typeof EnrollmentScalarFieldEnum)[keyof typeof EnrollmentScalarFieldEnum]
 
 
 export const SubjectScalarFieldEnum = {

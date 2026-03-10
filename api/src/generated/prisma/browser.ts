@@ -38,6 +38,11 @@ export type Classe = Prisma.ClasseModel
  */
 export type Student = Prisma.StudentModel
 /**
+ * Model Enrollment
+ * 
+ */
+export type Enrollment = Prisma.EnrollmentModel
+/**
  * Model Subject
  * 
  */

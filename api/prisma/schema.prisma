@@ -15,10 +15,10 @@ datasource db {
 
 model ScolaryYear {
   id         String   @id @default(cuid())
-  start_year DateTime
-  end_year   DateTime
+  start_year Int
+  end_year   Int
   is_active  Boolean  @default(false)
-  classes    Classe[]
+  enrollments Enrollment[]
 }
 
 enum LevelCategory {
@@ -40,14 +40,13 @@ model Classe {
   description   String?
   levelId       String
   level         Level       @relation(fields: [levelId], references: [id])
-  scolaryYearId String
-  scolaryYear   ScolaryYear @relation(fields: [scolaryYearId], references: [id])
-  students      Student[]
-  teachings     Teach[] 
+  teachings     Teach[]
+  enrollments   Enrollment[]
 }
 
 model Student {
-  matricule          String   @id @default(cuid())
+  id                 String   @id @default(cuid())
+  matricule          String   
   first_name         String
   last_name1         String
   gender             String
@@ -56,8 +55,23 @@ model Student {
   mother_name        String?
   tutor_phone_number String?
   address            String?
-  classeId           String
-  classe             Classe   @relation(fields: [classeId], references: [id])
+  enrollments        Enrollment[]
+}
+
+model Enrollment {
+  id            String      @id @default(cuid())
+  studentId     String
+  student       Student     @relation(fields: [studentId], references: [id])
+  classeId      String
+  classe        Classe      @relation(fields: [classeId], references: [id])
+  
+  scolaryYearId String
+  scolaryYear   ScolaryYear @relation(fields: [scolaryYearId], references: [id])
+
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+
+  @@unique([studentId, scolaryYearId])
 }
 
 model Subject {

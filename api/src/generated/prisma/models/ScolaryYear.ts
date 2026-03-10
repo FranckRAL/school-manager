@@ -20,21 +20,33 @@ export type ScolaryYearModel = runtime.Types.Result.DefaultSelection<Prisma.$Sco
 
 export type AggregateScolaryYear = {
   _count: ScolaryYearCountAggregateOutputType | null
+  _avg: ScolaryYearAvgAggregateOutputType | null
+  _sum: ScolaryYearSumAggregateOutputType | null
   _min: ScolaryYearMinAggregateOutputType | null
   _max: ScolaryYearMaxAggregateOutputType | null
 }
 
+export type ScolaryYearAvgAggregateOutputType = {
+  start_year: number | null
+  end_year: number | null
+}
+
+export type ScolaryYearSumAggregateOutputType = {
+  start_year: number | null
+  end_year: number | null
+}
+
 export type ScolaryYearMinAggregateOutputType = {
   id: string | null
-  start_year: Date | null
-  end_year: Date | null
+  start_year: number | null
+  end_year: number | null
   is_active: boolean | null
 }
 
 export type ScolaryYearMaxAggregateOutputType = {
   id: string | null
-  start_year: Date | null
-  end_year: Date | null
+  start_year: number | null
+  end_year: number | null
   is_active: boolean | null
 }
 
@@ -46,6 +58,16 @@ export type ScolaryYearCountAggregateOutputType = {
   _all: number
 }
 
+
+export type ScolaryYearAvgAggregateInputType = {
+  start_year?: true
+  end_year?: true
+}
+
+export type ScolaryYearSumAggregateInputType = {
+  start_year?: true
+  end_year?: true
+}
 
 export type ScolaryYearMinAggregateInputType = {
   id?: true
@@ -107,6 +129,18 @@ export type ScolaryYearAggregateArgs<ExtArgs extends runtime.Types.Extensions.In
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ScolaryYearAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ScolaryYearSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ScolaryYearMinAggregateInputType
@@ -137,16 +171,20 @@ export type ScolaryYearGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   _count?: ScolaryYearCountAggregateInputType | true
+  _avg?: ScolaryYearAvgAggregateInputType
+  _sum?: ScolaryYearSumAggregateInputType
   _min?: ScolaryYearMinAggregateInputType
   _max?: ScolaryYearMaxAggregateInputType
 }
 
 export type ScolaryYearGroupByOutputType = {
   id: string
-  start_year: Date
-  end_year: Date
+  start_year: number
+  end_year: number
   is_active: boolean
   _count: ScolaryYearCountAggregateOutputType | null
+  _avg: ScolaryYearAvgAggregateOutputType | null
+  _sum: ScolaryYearSumAggregateOutputType | null
   _min: ScolaryYearMinAggregateOutputType | null
   _max: ScolaryYearMaxAggregateOutputType | null
 }
@@ -171,10 +209,10 @@ export type ScolaryYearWhereInput = {
   OR?: Prisma.ScolaryYearWhereInput[]
   NOT?: Prisma.ScolaryYearWhereInput | Prisma.ScolaryYearWhereInput[]
   id?: Prisma.StringFilter<"ScolaryYear"> | string
-  start_year?: Prisma.DateTimeFilter<"ScolaryYear"> | Date | string
-  end_year?: Prisma.DateTimeFilter<"ScolaryYear"> | Date | string
+  start_year?: Prisma.IntFilter<"ScolaryYear"> | number
+  end_year?: Prisma.IntFilter<"ScolaryYear"> | number
   is_active?: Prisma.BoolFilter<"ScolaryYear"> | boolean
-  classes?: Prisma.ClasseListRelationFilter
+  enrollments?: Prisma.EnrollmentListRelationFilter
 }
 
 export type ScolaryYearOrderByWithRelationInput = {
@@ -182,7 +220,7 @@ export type ScolaryYearOrderByWithRelationInput = {
   start_year?: Prisma.SortOrder
   end_year?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
-  classes?: Prisma.ClasseOrderByRelationAggregateInput
+  enrollments?: Prisma.EnrollmentOrderByRelationAggregateInput
 }
 
 export type ScolaryYearWhereUniqueInput = Prisma.AtLeast<{
@@ -190,10 +228,10 @@ export type ScolaryYearWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ScolaryYearWhereInput | Prisma.ScolaryYearWhereInput[]
   OR?: Prisma.ScolaryYearWhereInput[]
   NOT?: Prisma.ScolaryYearWhereInput | Prisma.ScolaryYearWhereInput[]
-  start_year?: Prisma.DateTimeFilter<"ScolaryYear"> | Date | string
-  end_year?: Prisma.DateTimeFilter<"ScolaryYear"> | Date | string
+  start_year?: Prisma.IntFilter<"ScolaryYear"> | number
+  end_year?: Prisma.IntFilter<"ScolaryYear"> | number
   is_active?: Prisma.BoolFilter<"ScolaryYear"> | boolean
-  classes?: Prisma.ClasseListRelationFilter
+  enrollments?: Prisma.EnrollmentListRelationFilter
 }, "id">
 
 export type ScolaryYearOrderByWithAggregationInput = {
@@ -202,8 +240,10 @@ export type ScolaryYearOrderByWithAggregationInput = {
   end_year?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   _count?: Prisma.ScolaryYearCountOrderByAggregateInput
+  _avg?: Prisma.ScolaryYearAvgOrderByAggregateInput
   _max?: Prisma.ScolaryYearMaxOrderByAggregateInput
   _min?: Prisma.ScolaryYearMinOrderByAggregateInput
+  _sum?: Prisma.ScolaryYearSumOrderByAggregateInput
 }
 
 export type ScolaryYearScalarWhereWithAggregatesInput = {
@@ -211,61 +251,61 @@ export type ScolaryYearScalarWhereWithAggregatesInput = {
   OR?: Prisma.ScolaryYearScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ScolaryYearScalarWhereWithAggregatesInput | Prisma.ScolaryYearScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"ScolaryYear"> | string
-  start_year?: Prisma.DateTimeWithAggregatesFilter<"ScolaryYear"> | Date | string
-  end_year?: Prisma.DateTimeWithAggregatesFilter<"ScolaryYear"> | Date | string
+  start_year?: Prisma.IntWithAggregatesFilter<"ScolaryYear"> | number
+  end_year?: Prisma.IntWithAggregatesFilter<"ScolaryYear"> | number
   is_active?: Prisma.BoolWithAggregatesFilter<"ScolaryYear"> | boolean
 }
 
 export type ScolaryYearCreateInput = {
   id?: string
-  start_year: Date | string
-  end_year: Date | string
+  start_year: number
+  end_year: number
   is_active?: boolean
-  classes?: Prisma.ClasseCreateNestedManyWithoutScolaryYearInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutScolaryYearInput
 }
 
 export type ScolaryYearUncheckedCreateInput = {
   id?: string
-  start_year: Date | string
-  end_year: Date | string
+  start_year: number
+  end_year: number
   is_active?: boolean
-  classes?: Prisma.ClasseUncheckedCreateNestedManyWithoutScolaryYearInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutScolaryYearInput
 }
 
 export type ScolaryYearUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  start_year?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  end_year?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  start_year?: Prisma.IntFieldUpdateOperationsInput | number
+  end_year?: Prisma.IntFieldUpdateOperationsInput | number
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  classes?: Prisma.ClasseUpdateManyWithoutScolaryYearNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutScolaryYearNestedInput
 }
 
 export type ScolaryYearUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  start_year?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  end_year?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  start_year?: Prisma.IntFieldUpdateOperationsInput | number
+  end_year?: Prisma.IntFieldUpdateOperationsInput | number
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  classes?: Prisma.ClasseUncheckedUpdateManyWithoutScolaryYearNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutScolaryYearNestedInput
 }
 
 export type ScolaryYearCreateManyInput = {
   id?: string
-  start_year: Date | string
-  end_year: Date | string
+  start_year: number
+  end_year: number
   is_active?: boolean
 }
 
 export type ScolaryYearUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  start_year?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  end_year?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  start_year?: Prisma.IntFieldUpdateOperationsInput | number
+  end_year?: Prisma.IntFieldUpdateOperationsInput | number
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ScolaryYearUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  start_year?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  end_year?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  start_year?: Prisma.IntFieldUpdateOperationsInput | number
+  end_year?: Prisma.IntFieldUpdateOperationsInput | number
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -274,6 +314,11 @@ export type ScolaryYearCountOrderByAggregateInput = {
   start_year?: Prisma.SortOrder
   end_year?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
+}
+
+export type ScolaryYearAvgOrderByAggregateInput = {
+  start_year?: Prisma.SortOrder
+  end_year?: Prisma.SortOrder
 }
 
 export type ScolaryYearMaxOrderByAggregateInput = {
@@ -290,6 +335,11 @@ export type ScolaryYearMinOrderByAggregateInput = {
   is_active?: Prisma.SortOrder
 }
 
+export type ScolaryYearSumOrderByAggregateInput = {
+  start_year?: Prisma.SortOrder
+  end_year?: Prisma.SortOrder
+}
+
 export type ScolaryYearScalarRelationFilter = {
   is?: Prisma.ScolaryYearWhereInput
   isNot?: Prisma.ScolaryYearWhereInput
@@ -299,69 +349,73 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
-export type ScolaryYearCreateNestedOneWithoutClassesInput = {
-  create?: Prisma.XOR<Prisma.ScolaryYearCreateWithoutClassesInput, Prisma.ScolaryYearUncheckedCreateWithoutClassesInput>
-  connectOrCreate?: Prisma.ScolaryYearCreateOrConnectWithoutClassesInput
+export type ScolaryYearCreateNestedOneWithoutEnrollmentsInput = {
+  create?: Prisma.XOR<Prisma.ScolaryYearCreateWithoutEnrollmentsInput, Prisma.ScolaryYearUncheckedCreateWithoutEnrollmentsInput>
+  connectOrCreate?: Prisma.ScolaryYearCreateOrConnectWithoutEnrollmentsInput
   connect?: Prisma.ScolaryYearWhereUniqueInput
 }
 
-export type ScolaryYearUpdateOneRequiredWithoutClassesNestedInput = {
-  create?: Prisma.XOR<Prisma.ScolaryYearCreateWithoutClassesInput, Prisma.ScolaryYearUncheckedCreateWithoutClassesInput>
-  connectOrCreate?: Prisma.ScolaryYearCreateOrConnectWithoutClassesInput
-  upsert?: Prisma.ScolaryYearUpsertWithoutClassesInput
+export type ScolaryYearUpdateOneRequiredWithoutEnrollmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ScolaryYearCreateWithoutEnrollmentsInput, Prisma.ScolaryYearUncheckedCreateWithoutEnrollmentsInput>
+  connectOrCreate?: Prisma.ScolaryYearCreateOrConnectWithoutEnrollmentsInput
+  upsert?: Prisma.ScolaryYearUpsertWithoutEnrollmentsInput
   connect?: Prisma.ScolaryYearWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ScolaryYearUpdateToOneWithWhereWithoutClassesInput, Prisma.ScolaryYearUpdateWithoutClassesInput>, Prisma.ScolaryYearUncheckedUpdateWithoutClassesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ScolaryYearUpdateToOneWithWhereWithoutEnrollmentsInput, Prisma.ScolaryYearUpdateWithoutEnrollmentsInput>, Prisma.ScolaryYearUncheckedUpdateWithoutEnrollmentsInput>
 }
 
-export type ScolaryYearCreateWithoutClassesInput = {
+export type ScolaryYearCreateWithoutEnrollmentsInput = {
   id?: string
-  start_year: Date | string
-  end_year: Date | string
+  start_year: number
+  end_year: number
   is_active?: boolean
 }
 
-export type ScolaryYearUncheckedCreateWithoutClassesInput = {
+export type ScolaryYearUncheckedCreateWithoutEnrollmentsInput = {
   id?: string
-  start_year: Date | string
-  end_year: Date | string
+  start_year: number
+  end_year: number
   is_active?: boolean
 }
 
-export type ScolaryYearCreateOrConnectWithoutClassesInput = {
+export type ScolaryYearCreateOrConnectWithoutEnrollmentsInput = {
   where: Prisma.ScolaryYearWhereUniqueInput
-  create: Prisma.XOR<Prisma.ScolaryYearCreateWithoutClassesInput, Prisma.ScolaryYearUncheckedCreateWithoutClassesInput>
+  create: Prisma.XOR<Prisma.ScolaryYearCreateWithoutEnrollmentsInput, Prisma.ScolaryYearUncheckedCreateWithoutEnrollmentsInput>
 }
 
-export type ScolaryYearUpsertWithoutClassesInput = {
-  update: Prisma.XOR<Prisma.ScolaryYearUpdateWithoutClassesInput, Prisma.ScolaryYearUncheckedUpdateWithoutClassesInput>
-  create: Prisma.XOR<Prisma.ScolaryYearCreateWithoutClassesInput, Prisma.ScolaryYearUncheckedCreateWithoutClassesInput>
+export type ScolaryYearUpsertWithoutEnrollmentsInput = {
+  update: Prisma.XOR<Prisma.ScolaryYearUpdateWithoutEnrollmentsInput, Prisma.ScolaryYearUncheckedUpdateWithoutEnrollmentsInput>
+  create: Prisma.XOR<Prisma.ScolaryYearCreateWithoutEnrollmentsInput, Prisma.ScolaryYearUncheckedCreateWithoutEnrollmentsInput>
   where?: Prisma.ScolaryYearWhereInput
 }
 
-export type ScolaryYearUpdateToOneWithWhereWithoutClassesInput = {
+export type ScolaryYearUpdateToOneWithWhereWithoutEnrollmentsInput = {
   where?: Prisma.ScolaryYearWhereInput
-  data: Prisma.XOR<Prisma.ScolaryYearUpdateWithoutClassesInput, Prisma.ScolaryYearUncheckedUpdateWithoutClassesInput>
+  data: Prisma.XOR<Prisma.ScolaryYearUpdateWithoutEnrollmentsInput, Prisma.ScolaryYearUncheckedUpdateWithoutEnrollmentsInput>
 }
 
-export type ScolaryYearUpdateWithoutClassesInput = {
+export type ScolaryYearUpdateWithoutEnrollmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  start_year?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  end_year?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  start_year?: Prisma.IntFieldUpdateOperationsInput | number
+  end_year?: Prisma.IntFieldUpdateOperationsInput | number
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
-export type ScolaryYearUncheckedUpdateWithoutClassesInput = {
+export type ScolaryYearUncheckedUpdateWithoutEnrollmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  start_year?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  end_year?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  start_year?: Prisma.IntFieldUpdateOperationsInput | number
+  end_year?: Prisma.IntFieldUpdateOperationsInput | number
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -371,11 +425,11 @@ export type ScolaryYearUncheckedUpdateWithoutClassesInput = {
  */
 
 export type ScolaryYearCountOutputType = {
-  classes: number
+  enrollments: number
 }
 
 export type ScolaryYearCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  classes?: boolean | ScolaryYearCountOutputTypeCountClassesArgs
+  enrollments?: boolean | ScolaryYearCountOutputTypeCountEnrollmentsArgs
 }
 
 /**
@@ -391,8 +445,8 @@ export type ScolaryYearCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.
 /**
  * ScolaryYearCountOutputType without action
  */
-export type ScolaryYearCountOutputTypeCountClassesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ClasseWhereInput
+export type ScolaryYearCountOutputTypeCountEnrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EnrollmentWhereInput
 }
 
 
@@ -401,7 +455,7 @@ export type ScolaryYearSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   start_year?: boolean
   end_year?: boolean
   is_active?: boolean
-  classes?: boolean | Prisma.ScolaryYear$classesArgs<ExtArgs>
+  enrollments?: boolean | Prisma.ScolaryYear$enrollmentsArgs<ExtArgs>
   _count?: boolean | Prisma.ScolaryYearCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["scolaryYear"]>
 
@@ -428,7 +482,7 @@ export type ScolaryYearSelectScalar = {
 
 export type ScolaryYearOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "start_year" | "end_year" | "is_active", ExtArgs["result"]["scolaryYear"]>
 export type ScolaryYearInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  classes?: boolean | Prisma.ScolaryYear$classesArgs<ExtArgs>
+  enrollments?: boolean | Prisma.ScolaryYear$enrollmentsArgs<ExtArgs>
   _count?: boolean | Prisma.ScolaryYearCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ScolaryYearIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -437,12 +491,12 @@ export type ScolaryYearIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type $ScolaryYearPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ScolaryYear"
   objects: {
-    classes: Prisma.$ClassePayload<ExtArgs>[]
+    enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    start_year: Date
-    end_year: Date
+    start_year: number
+    end_year: number
     is_active: boolean
   }, ExtArgs["result"]["scolaryYear"]>
   composites: {}
@@ -838,7 +892,7 @@ readonly fields: ScolaryYearFieldRefs;
  */
 export interface Prisma__ScolaryYearClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  classes<T extends Prisma.ScolaryYear$classesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ScolaryYear$classesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  enrollments<T extends Prisma.ScolaryYear$enrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ScolaryYear$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -869,8 +923,8 @@ export interface Prisma__ScolaryYearClient<T, Null = never, ExtArgs extends runt
  */
 export interface ScolaryYearFieldRefs {
   readonly id: Prisma.FieldRef<"ScolaryYear", 'String'>
-  readonly start_year: Prisma.FieldRef<"ScolaryYear", 'DateTime'>
-  readonly end_year: Prisma.FieldRef<"ScolaryYear", 'DateTime'>
+  readonly start_year: Prisma.FieldRef<"ScolaryYear", 'Int'>
+  readonly end_year: Prisma.FieldRef<"ScolaryYear", 'Int'>
   readonly is_active: Prisma.FieldRef<"ScolaryYear", 'Boolean'>
 }
     
@@ -1260,27 +1314,27 @@ export type ScolaryYearDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
- * ScolaryYear.classes
+ * ScolaryYear.enrollments
  */
-export type ScolaryYear$classesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type ScolaryYear$enrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Classe
+   * Select specific fields to fetch from the Enrollment
    */
-  select?: Prisma.ClasseSelect<ExtArgs> | null
+  select?: Prisma.EnrollmentSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Classe
+   * Omit specific fields from the Enrollment
    */
-  omit?: Prisma.ClasseOmit<ExtArgs> | null
+  omit?: Prisma.EnrollmentOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ClasseInclude<ExtArgs> | null
-  where?: Prisma.ClasseWhereInput
-  orderBy?: Prisma.ClasseOrderByWithRelationInput | Prisma.ClasseOrderByWithRelationInput[]
-  cursor?: Prisma.ClasseWhereUniqueInput
+  include?: Prisma.EnrollmentInclude<ExtArgs> | null
+  where?: Prisma.EnrollmentWhereInput
+  orderBy?: Prisma.EnrollmentOrderByWithRelationInput | Prisma.EnrollmentOrderByWithRelationInput[]
+  cursor?: Prisma.EnrollmentWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ClasseScalarFieldEnum | Prisma.ClasseScalarFieldEnum[]
+  distinct?: Prisma.EnrollmentScalarFieldEnum | Prisma.EnrollmentScalarFieldEnum[]
 }
 
 /**

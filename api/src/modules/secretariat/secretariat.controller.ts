@@ -43,9 +43,9 @@ export class SecretariatController {
    * @param matricule
    * @returns Student
    */
-  @Get('students/:matricule')
-  findOneStudent(@Param('matricule') matricule: string) {
-    return this.studentService.findOne(matricule);
+  @Get('students/:id')
+  findOneStudent(@Param('id') id: string) {
+    return this.studentService.findOne(id);
   }
 
   /**
@@ -54,12 +54,12 @@ export class SecretariatController {
    * @param updateStudentDto
    * @returns updated student info
    */
-  @Patch('students/:matricule')
+  @Patch('students/:id')
   updateStudent(
-    @Param('matricule') matricule: string,
+    @Param('id') id: string,
     @Body() updateStudentDto: UpdateStudentDto,
   ) {
-    return this.studentService.update(matricule, updateStudentDto);
+    return this.studentService.update(id, updateStudentDto);
   }
 
   /**
@@ -67,23 +67,9 @@ export class SecretariatController {
    * @param matricule
    * @returns deleted student
    */
-  @Delete('students/:matricule')
-  removeStudent(@Param('matricule') matricule: string) {
-    return this.studentService.remove(matricule);
-  }
-
-  /**
-   * Promote the student's classe
-   * @param matricule
-   * @param classeId
-   * @returns the promoted student
-   */
-  @Patch('students/:matricule/promote')
-  promote(
-    @Param('matricule') matricule: string,
-    @Body('classeId') classeId: string,
-  ) {
-    return this.studentService.promote(matricule, classeId);
+  @Delete('students/:id')
+  removeStudent(@Param('id') id: string) {
+    return this.studentService.remove(id);
   }
 
   /**
@@ -111,7 +97,7 @@ export class SecretariatController {
    * @returns classe
    */
   @Get('classes/:classeId')
-  findOneClasse(@Param('matricule') classeId: string) {
+  findOneClasse(@Param('classeId') classeId: string) {
     return this.classeService.findOne(classeId);
   }
 

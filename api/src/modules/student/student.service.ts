@@ -5,100 +5,48 @@ import prisma from 'src/lib/db';
 @Injectable()
 export class StudentService {
   async create(createStudentDto: CreateStudentDto) {
-    console.log(createStudentDto);
-    const student = await prisma.student.create({
-      data: {
-        first_name: createStudentDto.first_name,
-        last_name1: createStudentDto.last_name1,
-        gender: createStudentDto.gender,
-        date_of_birth: createStudentDto.date_of_birth,
-        father_name: createStudentDto.father_name,
-        mother_name: createStudentDto.mother_name,
-        tutor_phone_number: createStudentDto.tutor_phone_number,
-        address: createStudentDto.address,
-        classe: {
-          connect: {
-            id: createStudentDto.classeId,
-          },
-        },
-      },
-    });
-
-    return student;
+    try {
+      const student = await prisma.student.create({
+        data: { ...createStudentDto },
+      });
+      return student;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   async findAll() {
     const students = await prisma.student.findMany({
-      include: {
-        classe: true,
-      },
       orderBy: {
         first_name: 'asc',
       },
     });
-    console.log(students);
     return students;
   }
 
-  async findOne(matricule: string) {
+  async findOne(id: string) {
     const student = await prisma.student.findUnique({
       where: {
-        matricule: matricule,
-      },
-      include: {
-        classe: true,
+        id,
       },
     });
-    console.log(student);
     return student;
   }
 
-  async update(matricule: string, updateStudentDto: UpdateStudentDto) {
-    console.log(updateStudentDto);
+  async update(id: string, updateStudentDto: UpdateStudentDto) {
     const student = await prisma.student.update({
       where: {
-        matricule: matricule,
+        id,
       },
-      data: {
-        first_name: updateStudentDto.first_name,
-        last_name1: updateStudentDto.last_name1,
-        gender: updateStudentDto.gender,
-        date_of_birth: updateStudentDto.date_of_birth,
-        father_name: updateStudentDto.father_name,
-        mother_name: updateStudentDto.mother_name,
-        tutor_phone_number: updateStudentDto.tutor_phone_number,
-        address: updateStudentDto.address,
-        classe: {
-          connect: {
-            id: updateStudentDto.classeId,
-          },
-        },
-      },
+      data: { ...updateStudentDto },
     });
-    console.log(student);
     return student;
   }
 
-  async remove(matricule: string) {
+  async remove(id: string) {
     const student = await prisma.student.delete({
       where: {
-        matricule: matricule,
-      },
-    });
-    return student;
-  }
-
-  async promote(matricule: string, classeId: string) {
-    const student = await prisma.student.update({
-      where: {
-        matricule: matricule,
-      },
-      data: {
-        classe: {
-          connect: {
-            id: classeId,
-          },
-        },
+        id,
       },
     });
     return student;

@@ -2,15 +2,18 @@ import { createZodDto } from 'nestjs-zod';
 import { z } from 'zod';
 
 export const createStudentSchema = z.object({
+  matricule: z.string(),
   first_name: z.string().min(2),
   last_name1: z.string().min(2),
   gender: z.enum(['M', 'F']),
   date_of_birth: z.coerce.date(),
   father_name: z.string().optional(),
   mother_name: z.string().optional(),
-  tutor_phone_number: z.string().regex(/^\d{10}$/),
+  tutor_phone_number: z
+    .string()
+    .regex(/^\d{10}$/)
+    .optional(),
   address: z.string().optional(),
-  classeId: z.cuid2('Classe id invalide'),
 });
 
 export const updateStudentSchema = createStudentSchema.partial();

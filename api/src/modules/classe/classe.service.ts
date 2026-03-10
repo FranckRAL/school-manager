@@ -7,12 +7,7 @@ export class ClasseService {
   async create(data: CreateClasseDto) {
     try {
       const classe = await prisma.classe.create({
-        data: {
-          name: data.name,
-          description: data.description,
-          levelId: data.levelId,
-          scolaryYearId: data.scolaryYearId,
-        },
+        data: { ...data },
       });
       return classe;
     } catch (error) {
@@ -48,12 +43,7 @@ export class ClasseService {
         where: {
           id,
         },
-        data: {
-          name: data.name,
-          description: data.description,
-          levelId: data.levelId,
-          scolaryYearId: data.scolaryYearId,
-        },
+        data: { ...data },
       });
       return classe;
     } catch (error) {
