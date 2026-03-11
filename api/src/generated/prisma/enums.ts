@@ -16,3 +16,12 @@ export const LevelCategory = {
 } as const
 
 export type LevelCategory = (typeof LevelCategory)[keyof typeof LevelCategory]
+
+
+export const EnrollmentStatus = {
+  ACTIVE: 'ACTIVE',
+  DROPPED: 'DROPPED',
+  SUSPENDED: 'SUSPENDED'
+} as const
+
+export type EnrollmentStatus = (typeof EnrollmentStatus)[keyof typeof EnrollmentStatus]

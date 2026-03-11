@@ -125,6 +125,8 @@ export const EnrollmentScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
   classeId: 'classeId',
+  max_student: 'max_student',
+  status: 'status',
   scolaryYearId: 'scolaryYearId',
   created_at: 'created_at',
   updated_at: 'updated_at'

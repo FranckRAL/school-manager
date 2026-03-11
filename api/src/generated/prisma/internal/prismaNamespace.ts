@@ -1016,6 +1016,8 @@ export const EnrollmentScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
   classeId: 'classeId',
+  max_student: 'max_student',
+  status: 'status',
   scolaryYearId: 'scolaryYearId',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -1133,6 +1135,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'EnrollmentStatus'
+ */
+export type EnumEnrollmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnrollmentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'EnrollmentStatus[]'
+ */
+export type ListEnumEnrollmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnrollmentStatus[]'>
     
 
 
